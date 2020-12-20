@@ -1,46 +1,38 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react'
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'
 
-import FeatherIcon from 'react-native-vector-icons/Feather';
-import {
-  Container,
-  CartPricing,
-  CartButton,
-  CartButtonText,
-  CartTotalPrice,
-} from './styles';
+import FeatherIcon from 'react-native-vector-icons/Feather'
+import { Container, CartPricing, CartButton, CartButtonText, CartTotalPrice } from './styles'
 
-import formatValue from '../../utils/formatValue';
+import formatValue from '../../utils/formatValue'
 
-import { useCart } from '../../hooks/cart';
+import { useCart } from '../../hooks/cart'
 
 // Calculo do total
 // Navegação no clique do TouchableHighlight
 
 const FloatingCart: React.FC = () => {
-  const { products } = useCart();
+  const { products } = useCart()
 
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
   const cartTotal = useMemo(() => {
-    // TODO RETURN THE SUM OF THE PRICE FROM ALL ITEMS IN THE CART
+    const total = products.reduce((accumulator, product) => {
+      const subTotal = product.price * product.quantity
+      return accumulator + subTotal
+    }, 0)
 
-    return formatValue(0);
-  }, [products]);
+    return formatValue(total)
+  }, [products])
 
   const totalItensInCart = useMemo(() => {
-    // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
-
-    return 0;
-  }, [products]);
+    return products.reduce((accumulator, product) => accumulator + product.quantity, 0)
+  }, [products])
 
   return (
     <Container>
-      <CartButton
-        testID="navigate-to-cart-button"
-        onPress={() => navigation.navigate('Cart')}
-      >
+      <CartButton testID="navigate-to-cart-button" onPress={() => navigation.navigate('Cart')}>
         <FeatherIcon name="shopping-cart" size={24} color="#fff" />
         <CartButtonText>{`${totalItensInCart} itens`}</CartButtonText>
       </CartButton>
@@ -49,7 +41,7 @@ const FloatingCart: React.FC = () => {
         <CartTotalPrice>{cartTotal}</CartTotalPrice>
       </CartPricing>
     </Container>
-  );
-};
+  )
+}
 
-export default FloatingCart;
+export default FloatingCart

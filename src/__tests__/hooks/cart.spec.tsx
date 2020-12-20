@@ -1,18 +1,12 @@
 /* eslint-disable import/first */
 
-import React from 'react';
-import { mocked } from 'ts-jest/utils';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React from 'react'
+import { mocked } from 'ts-jest/utils'
+import { View, Text, TouchableOpacity } from 'react-native'
 
-import {
-  render,
-  fireEvent,
-  act,
-  wait,
-  cleanup,
-} from '@testing-library/react-native';
+import { render, fireEvent, act, wait, cleanup } from '@testing-library/react-native'
 
-jest.useFakeTimers();
+jest.useFakeTimers()
 
 jest.mock('@react-native-community/async-storage', () => ({
   __esModule: true,
@@ -22,13 +16,13 @@ jest.mock('@react-native-community/async-storage', () => ({
     getItem: jest.fn().mockReturnValue(null),
     clear: jest.fn(),
   },
-}));
+}))
 
-import AsyncStorage from '@react-native-community/async-storage';
-import { CartProvider, useCart } from '../../hooks/cart';
+import AsyncStorage from '@react-native-community/async-storage'
+import { CartProvider, useCart } from '../../hooks/cart'
 
 const TestComponent: React.FC = () => {
-  const { products, addToCart, increment, decrement } = useCart();
+  const { products, addToCart, increment, decrement } = useCart()
 
   function handleAddToCart(): void {
     addToCart({
@@ -37,15 +31,15 @@ const TestComponent: React.FC = () => {
       image_url: 'test',
       price: 1000,
       quantity: 0,
-    });
+    })
   }
 
   function handleIncrement(): void {
-    increment('1234');
+    increment('1234')
   }
 
   function handleDecrement(): void {
-    decrement('1234');
+    decrement('1234')
   }
 
   return (
@@ -69,73 +63,73 @@ const TestComponent: React.FC = () => {
         </View>
       ))}
     </>
-  );
-};
+  )
+}
 
-const mockedAsyncStorage = mocked(AsyncStorage);
+const mockedAsyncStorage = mocked(AsyncStorage)
 
 describe('Cart Context', () => {
   afterEach(() => {
-    mockedAsyncStorage.setItem.mockClear();
-    mockedAsyncStorage.getItem.mockClear();
+    mockedAsyncStorage.setItem.mockClear()
+    mockedAsyncStorage.getItem.mockClear()
 
-    cleanup();
-  });
+    cleanup()
+  })
 
   it('should be able to add products to the cart', async () => {
     const { getByText, getByTestId } = render(
       <CartProvider>
         <TestComponent />
       </CartProvider>,
-    );
+    )
 
     await act(async () => {
-      fireEvent.press(getByTestId('add-to-cart'));
-    });
+      fireEvent.press(getByTestId('add-to-cart'))
+    })
 
-    await wait(() => expect(getByText('Test product')).toBeTruthy());
-    await wait(() => expect(getByText('1')).toBeTruthy());
-  });
+    await wait(() => expect(getByText('Test product')).toBeTruthy())
+    await wait(() => expect(getByText('1')).toBeTruthy())
+  })
 
   it('should be able to increment quantity', async () => {
     const { getByText, getByTestId } = render(
       <CartProvider>
         <TestComponent />
       </CartProvider>,
-    );
+    )
 
     await act(async () => {
-      fireEvent.press(getByTestId('add-to-cart'));
-    });
+      fireEvent.press(getByTestId('add-to-cart'))
+    })
 
     await act(async () => {
-      fireEvent.press(getByTestId('increment'));
-    });
+      fireEvent.press(getByTestId('increment'))
+    })
 
-    await wait(async () => expect(getByText('2')).toBeTruthy());
-  });
+    await wait(async () => expect(getByText('2')).toBeTruthy())
+  })
 
   it('should be able to decrement quantity', async () => {
     const { getByText, getByTestId } = render(
       <CartProvider>
         <TestComponent />
       </CartProvider>,
-    );
+    )
 
     await act(async () => {
-      fireEvent.press(getByTestId('add-to-cart'));
-    });
+      fireEvent.press(getByTestId('add-to-cart'))
+    })
 
     await act(async () => {
-      fireEvent.press(getByTestId('increment'));
-    });
+      fireEvent.press(getByTestId('increment'))
+    })
 
     await act(async () => {
-      fireEvent.press(getByTestId('decrement'));
-    });
+      fireEvent.press(getByTestId('decrement'))
+    })
 
-    await wait(() => expect(getByText('1')).toBeTruthy());
-  });
+    await wait(() => expect(getByText('1')).toBeTruthy())
+  })
 
   it('should load products from AsyncStorage', async () => {
     mockedAsyncStorage.getItem.mockReturnValue(
@@ -152,40 +146,38 @@ describe('Cart Context', () => {
           ]),
         ),
       ),
-    );
+    )
 
     const { getByText } = render(
       <CartProvider>
         <TestComponent />
       </CartProvider>,
-    );
+    )
 
-    await wait(() => expect(getByText('Test product')).toBeTruthy());
+    await wait(() => expect(getByText('Test product')).toBeTruthy())
 
-    await wait(() => expect(getByText('Test product')).toBeTruthy());
-  });
+    await wait(() => expect(getByText('Test product')).toBeTruthy())
+  })
 
   it('should store products in AsyncStorage while adding, incrementing and decrementing', async () => {
     const { getByTestId } = render(
       <CartProvider>
         <TestComponent />
       </CartProvider>,
-    );
+    )
 
     await act(async () => {
-      fireEvent.press(getByTestId('add-to-cart'));
-    });
+      fireEvent.press(getByTestId('add-to-cart'))
+    })
 
     await act(async () => {
-      fireEvent.press(getByTestId('increment'));
-    });
+      fireEvent.press(getByTestId('increment'))
+    })
 
     await act(async () => {
-      fireEvent.press(getByTestId('decrement'));
-    });
+      fireEvent.press(getByTestId('decrement'))
+    })
 
-    await wait(() =>
-      expect(mockedAsyncStorage.setItem).toHaveBeenCalledTimes(3),
-    );
-  });
-});
+    await wait(() => expect(mockedAsyncStorage.setItem).toHaveBeenCalledTimes(3))
+  })
+})

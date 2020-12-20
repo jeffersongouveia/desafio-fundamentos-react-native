@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import React, { useMemo } from 'react'
+import FeatherIcon from 'react-native-vector-icons/Feather'
 
-import { View } from 'react-native';
+import { View } from 'react-native'
 
 import {
   Container,
@@ -21,42 +21,43 @@ import {
   TotalProductsContainer,
   TotalProductsText,
   SubtotalValue,
-} from './styles';
+} from './styles'
 
-import { useCart } from '../../hooks/cart';
+import { useCart } from '../../hooks/cart'
 
-import formatValue from '../../utils/formatValue';
+import formatValue from '../../utils/formatValue'
 
 interface Product {
-  id: string;
-  title: string;
-  image_url: string;
-  price: number;
-  quantity: number;
+  id: string
+  title: string
+  image_url: string
+  price: number
+  quantity: number
 }
 
 const Cart: React.FC = () => {
-  const { increment, decrement, products } = useCart();
+  const { increment, decrement, products } = useCart()
 
   function handleIncrement(id: string): void {
-    // TODO
+    increment(id)
   }
 
   function handleDecrement(id: string): void {
-    // TODO
+    decrement(id)
   }
 
   const cartTotal = useMemo(() => {
-    // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
+    const total = products.reduce((accumulator, product) => {
+      const subTotal = product.price * product.quantity
+      return accumulator + subTotal
+    }, 0)
 
-    return formatValue(0);
-  }, [products]);
+    return formatValue(total)
+  }, [products])
 
   const totalItensInCart = useMemo(() => {
-    // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
-
-    return 0;
-  }, [products]);
+    return products.reduce((accumulator, product) => accumulator + product.quantity, 0)
+  }, [products])
 
   return (
     <Container>
@@ -74,30 +75,20 @@ const Cart: React.FC = () => {
               <ProductTitleContainer>
                 <ProductTitle>{item.title}</ProductTitle>
                 <ProductPriceContainer>
-                  <ProductSinglePrice>
-                    {formatValue(item.price)}
-                  </ProductSinglePrice>
+                  <ProductSinglePrice>{formatValue(item.price)}</ProductSinglePrice>
 
                   <TotalContainer>
                     <ProductQuantity>{`${item.quantity}x`}</ProductQuantity>
 
-                    <ProductPrice>
-                      {formatValue(item.price * item.quantity)}
-                    </ProductPrice>
+                    <ProductPrice>{formatValue(item.price * item.quantity)}</ProductPrice>
                   </TotalContainer>
                 </ProductPriceContainer>
               </ProductTitleContainer>
               <ActionContainer>
-                <ActionButton
-                  testID={`increment-${item.id}`}
-                  onPress={() => handleIncrement(item.id)}
-                >
+                <ActionButton testID={`increment-${item.id}`} onPress={() => handleIncrement(item.id)}>
                   <FeatherIcon name="plus" color="#E83F5B" size={16} />
                 </ActionButton>
-                <ActionButton
-                  testID={`decrement-${item.id}`}
-                  onPress={() => handleDecrement(item.id)}
-                >
+                <ActionButton testID={`decrement-${item.id}`} onPress={() => handleDecrement(item.id)}>
                   <FeatherIcon name="minus" color="#E83F5B" size={16} />
                 </ActionButton>
               </ActionContainer>
@@ -111,7 +102,7 @@ const Cart: React.FC = () => {
         <SubtotalValue>{cartTotal}</SubtotalValue>
       </TotalProductsContainer>
     </Container>
-  );
-};
+  )
+}
 
-export default Cart;
+export default Cart

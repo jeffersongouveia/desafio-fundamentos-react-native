@@ -1,28 +1,28 @@
 {
   "products": [
     {
-      "id": "123",
-      "title": "Nome do produto 01",
-      "image_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/camiseta-ecommerce.jpg",
-      "price": 50
+      "id": "23",
+      "title": "Cadeira Embody Gaming",
+      "image_url": "https://hermanmiller.vteximg.com.br/arquivos/ids/161695/embody_gamer_01.jpg?v=637417592345330000",
+      "price": 10745
     },
     {
-      "id": "1234",
-      "title": "Nome do produto 02",
-      "image_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/camiseta-ecommerce.jpg",
-      "price": 60
+      "id": "24",
+      "title": "Smart TV LED 58\" 4K UHD",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/612M5ByRi6L._AC_SX679_.jpg",
+      "price": 2699
     },
     {
-      "id": "12345",
-      "title": "Nome do produto 03",
-      "image_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/camiseta-ecommerce.jpg",
-      "price": 70
+      "id": "25",
+      "title": "Monitor Gigabyte Aorus LED 27\" Widescreen",
+      "image_url": "https://images6.kabum.com.br/produtos/fotos/102936/monitor-gamer-aorus-led-27-widescreen-curvo-full-hd-hdmi-165hz-1ms-altura-ajustavel-cv27f_monitor-gamer-aorus-led-27-widescreen-curvo-full-hd-hdmi-165hz-1ms-altura-ajustavel-cv27f_1565620442_gg.jpg",
+      "price": 4566
     },
     {
-      "id": "123456",
-      "title": "Nome do produto 04",
-      "image_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/camiseta-ecommerce.jpg",
-      "price": 80
+      "id": "26",
+      "title": "RTX 3080 Grafitti",
+      "image_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRAXWHBlYSHhy-oOsxwW2_6hxQRbgTh8jIYmWwiwGv5z9dtTMWWmDlFAjSrJa0wSY5c5Z9ZzPrk&usqp=CAE",
+      "price": 6455
     }
   ]
 }
